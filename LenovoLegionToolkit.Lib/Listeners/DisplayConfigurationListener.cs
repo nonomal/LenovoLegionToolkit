@@ -1,41 +1,74 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using LenovoLegionToolkit.Lib.Extensions;
+using LenovoLegionToolkit.Lib.System;
 using LenovoLegionToolkit.Lib.Utils;
 using Microsoft.Win32;
 
-namespace LenovoLegionToolkit.Lib.Listeners
+namespace LenovoLegionToolkit.Lib.Listeners;
+
+public class DisplayConfigurationListener : IListener<DisplayConfigurationListener.ChangedEventArgs>
 {
-    public class DisplayConfigurationListener : IListener<EventArgs>
+    public class ChangedEventArgs : EventArgs
     {
-        private bool _started;
+        public bool? HDR { get; init; }
+    }
 
-        public event EventHandler<EventArgs>? Changed;
+    private bool _started;
 
-        public Task StartAsync()
-        {
-            if (_started)
-                return Task.CompletedTask;
+    public bool? IsHDROn { get; private set; }
 
-            SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
-            _started = true;
+    public event EventHandler<ChangedEventArgs>? Changed;
 
+    public Task StartAsync()
+    {
+        if (_started)
             return Task.CompletedTask;
-        }
 
-        public Task StopAsync()
+        IsHDROn = GetHDRStatus();
+
+        SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
+        _started = true;
+
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync()
+    {
+        SystemEvents.DisplaySettingsChanged -= SystemEvents_DisplaySettingsChanged;
+        _started = false;
+
+        IsHDROn = null;
+
+        return Task.CompletedTask;
+    }
+
+    private void SystemEvents_DisplaySettingsChanged(object? sender, EventArgs e)
+    {
+        if (Log.Instance.IsTraceEnabled)
+            Log.Instance.Trace($"Event received.");
+
+        InternalDisplay.SetNeedsRefresh();
+
+        var previousIsHDROn = IsHDROn;
+        IsHDROn = GetHDRStatus();
+        var changed = previousIsHDROn != IsHDROn;
+
+        Changed?.Invoke(this, new() { HDR = changed ? IsHDROn : null });
+    }
+
+    private static bool? GetHDRStatus()
+    {
+        try
         {
-            SystemEvents.DisplaySettingsChanged -= SystemEvents_DisplaySettingsChanged;
-            _started = false;
-
-            return Task.CompletedTask;
+            return Displays.Get().FirstOrDefault()?.GetAdvancedColorInfo().AdvancedColorEnabled;
         }
-
-        private void SystemEvents_DisplaySettingsChanged(object? sender, EventArgs e)
+        catch (Exception ex)
         {
             if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Event received.");
-
-            Changed?.Invoke(this, EventArgs.Empty);
+                Log.Instance.Trace($"Failed to get HDR status. Assuming unavailable.", ex);
+            return null;
         }
     }
 }

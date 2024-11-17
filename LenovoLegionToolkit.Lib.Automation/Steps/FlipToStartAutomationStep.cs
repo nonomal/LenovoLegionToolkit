@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Steps
-{
-    public class FlipToStartAutomationStep : AbstractFeatureAutomationStep<FlipToStartState>
-    {
-        [JsonConstructor]
-        public FlipToStartAutomationStep(FlipToStartState state) : base(state) { }
+namespace LenovoLegionToolkit.Lib.Automation.Steps;
 
-        public override IAutomationStep DeepCopy() => new FlipToStartAutomationStep(State);
-    }
+[method: JsonConstructor]
+public class FlipToStartAutomationStep(FlipToStartState state)
+    : AbstractFeatureAutomationStep<FlipToStartState>(state)
+{
+    public override IAutomationStep DeepCopy() => new FlipToStartAutomationStep(State);
 }

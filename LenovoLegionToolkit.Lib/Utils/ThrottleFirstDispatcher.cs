@@ -1,44 +1,35 @@
 ﻿using System;
 using System.Threading.Tasks;
+using NeoSmart.AsyncLock;
 
-namespace LenovoLegionToolkit.Lib.Utils
+namespace LenovoLegionToolkit.Lib.Utils;
+
+public class ThrottleFirstDispatcher(TimeSpan interval, string? tag = null)
 {
-    public class ThrottleFirstDispatcher
+    private readonly AsyncLock _lock = new();
+
+    private DateTime _lastEvent = DateTime.MinValue;
+
+    public async Task DispatchAsync(Func<Task> task)
     {
-        private readonly object _lock = new();
-
-        private readonly TimeSpan _interval;
-        private readonly string? _tag;
-
-        private DateTime _lastEvent = DateTime.MinValue;
-
-        public ThrottleFirstDispatcher(TimeSpan interval, string? tag = null)
+        using (await _lock.LockAsync().ConfigureAwait(false))
         {
-            _interval = interval;
-            _tag = tag;
-        }
+            var diff = DateTime.UtcNow - _lastEvent;
 
-        public Task DispatchAsync(Func<Task> task)
-        {
-            lock (_lock)
+            if (diff < interval)
             {
-                var now = DateTime.UtcNow;
-                var diff = now - _lastEvent;
-                _lastEvent = now;
+                if (tag is not null && Log.Instance.IsTraceEnabled)
+                    Log.Instance.Trace($"Throttling... [tag={tag}, diff={diff.TotalMilliseconds}ms]");
 
-                if (diff < _interval)
-                {
-                    if (_tag is not null && Log.Instance.IsTraceEnabled)
-                        Log.Instance.Trace($"Throttling... [tag={_tag}, diff={diff.TotalMilliseconds}ms]");
-
-                    return Task.CompletedTask;
-                }
-
-                if (_tag is not null && Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Allowing... [tag={_tag}, diff={diff.TotalMilliseconds}ms]");
-
-                return task();
+                return;
             }
+
+            if (tag is not null && Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Allowing... [tag={tag}, diff={diff.TotalMilliseconds}ms]");
+
+            await task().ConfigureAwait(false);
+
+            _lastEvent = DateTime.UtcNow;
         }
     }
 }
