@@ -1,43 +1,99 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Pipeline.Triggers
+namespace LenovoLegionToolkit.Lib.Automation.Pipeline.Triggers;
+
+public interface IAutomationPipelineTrigger
 {
-    public interface IAutomationPipelineTrigger
-    {
-        [JsonIgnore]
-        string DisplayName { get; }
+    [JsonIgnore]
+    string DisplayName { get; }
 
-        Task<bool> IsSatisfiedAsync(IAutomationEvent automationEvent);
+    Task<bool> IsMatchingEvent(IAutomationEvent automationEvent);
 
-        IAutomationPipelineTrigger DeepCopy();
-    }
+    Task<bool> IsMatchingState();
 
-    public interface IDisallowDuplicatesAutomationPipelineTrigger { }
+    void UpdateEnvironment(AutomationEnvironment environment);
 
-    public interface IOnStartupAutomationPipelineTrigger { }
+    IAutomationPipelineTrigger DeepCopy();
+}
 
-    public interface IPowerStateAutomationPipelineTrigger { }
+public interface IDisallowDuplicatesAutomationPipelineTrigger : IAutomationPipelineTrigger;
 
-    public interface IPowerModeAutomationPipelineTrigger
-    {
-        PowerModeState PowerModeState { get; }
+public interface ICompositeAutomationPipelineTrigger : IAutomationPipelineTrigger
+{
+    public IAutomationPipelineTrigger[] Triggers { get; }
+}
 
-        IAutomationPipelineTrigger DeepCopy(PowerModeState powerModeState);
-    }
+public interface IHDRPipelineTrigger : IDisallowDuplicatesAutomationPipelineTrigger;
 
-    public interface IProcessesAutomationPipelineTrigger
-    {
-        ProcessInfo[] Processes { get; }
+public interface INativeWindowsMessagePipelineTrigger : IAutomationPipelineTrigger;
 
-        IAutomationPipelineTrigger DeepCopy(ProcessInfo[] processes);
-    }
+public interface IDeviceAutomationPipelineTrigger : INativeWindowsMessagePipelineTrigger
+{
+    string[] InstanceIds { get; }
 
-    public interface ITimeAutomationPipelineTrigger
-    {
-        bool IsSunrise { get; }
-        bool IsSunset { get; }
-        Time? Time { get; }
-        IAutomationPipelineTrigger DeepCopy(bool isSunrise, bool isSunset, Time? time);
-    }
+    IDeviceAutomationPipelineTrigger DeepCopy(string[] instanceIds);
+}
+
+public interface IOnStartupAutomationPipelineTrigger : IDisallowDuplicatesAutomationPipelineTrigger;
+
+public interface IOnResumeAutomationPipelineTrigger : IDisallowDuplicatesAutomationPipelineTrigger;
+
+public interface IPowerStateAutomationPipelineTrigger : IDisallowDuplicatesAutomationPipelineTrigger;
+
+public interface IPowerModeAutomationPipelineTrigger : IAutomationPipelineTrigger
+{
+    PowerModeState PowerModeState { get; }
+
+    IPowerModeAutomationPipelineTrigger DeepCopy(PowerModeState powerModeState);
+}
+
+public interface IGodModePresetChangedAutomationPipelineTrigger : IAutomationPipelineTrigger
+{
+    Guid PresetId { get; }
+
+    IGodModePresetChangedAutomationPipelineTrigger DeepCopy(Guid powerModeState);
+}
+
+public interface IGameAutomationPipelineTrigger : IDisallowDuplicatesAutomationPipelineTrigger;
+
+public interface IProcessesAutomationPipelineTrigger : IAutomationPipelineTrigger
+{
+    ProcessInfo[] Processes { get; }
+
+    IProcessesAutomationPipelineTrigger DeepCopy(ProcessInfo[] processes);
+}
+
+public interface ITimeAutomationPipelineTrigger : IAutomationPipelineTrigger
+{
+    bool IsSunrise { get; }
+    bool IsSunset { get; }
+    Time? Time { get; }
+    DayOfWeek[] Days { get; }
+
+    ITimeAutomationPipelineTrigger DeepCopy(bool isSunrise, bool isSunset, Time? time, DayOfWeek[] day);
+}
+
+public interface IUserInactivityPipelineTrigger : IAutomationPipelineTrigger
+{
+    TimeSpan InactivityTimeSpan { get; }
+
+    IUserInactivityPipelineTrigger DeepCopy(TimeSpan timeSpan);
+}
+
+public interface IWiFiConnectedPipelineTrigger : IAutomationPipelineTrigger
+{
+    string[] Ssids { get; }
+
+    IWiFiConnectedPipelineTrigger DeepCopy(string[] ssids);
+}
+
+public interface IWiFiDisconnectedPipelineTrigger : IDisallowDuplicatesAutomationPipelineTrigger;
+
+public interface IPeriodicAutomationPipelineTrigger : IAutomationPipelineTrigger
+{
+    public TimeSpan Period { get; }
+
+    IPeriodicAutomationPipelineTrigger DeepCopy(TimeSpan period);
 }

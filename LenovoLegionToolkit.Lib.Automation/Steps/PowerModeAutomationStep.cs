@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Steps
-{
-    public class PowerModeAutomationStep : AbstractFeatureAutomationStep<PowerModeState>
-    {
-        [JsonConstructor]
-        public PowerModeAutomationStep(PowerModeState state) : base(state) { }
+namespace LenovoLegionToolkit.Lib.Automation.Steps;
 
-        public override IAutomationStep DeepCopy() => new PowerModeAutomationStep(State);
-    }
+[method: JsonConstructor]
+public class PowerModeAutomationStep(PowerModeState state)
+    : AbstractFeatureAutomationStep<PowerModeState>(state)
+{
+    public override IAutomationStep DeepCopy() => new PowerModeAutomationStep(State);
 }

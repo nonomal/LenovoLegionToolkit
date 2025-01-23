@@ -1,107 +1,61 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.Settings;
 
-namespace LenovoLegionToolkit.Lib.Utils
+namespace LenovoLegionToolkit.Lib.Utils;
+
+public class WarrantyChecker(ApplicationSettings settings, HttpClientFactory httpClientFactory)
 {
-    public class WarrantyChecker
+    public async Task<WarrantyInfo?> GetWarrantyInfo(MachineInformation machineInformation, bool forceRefresh = false, CancellationToken token = default)
     {
-        private readonly ApplicationSettings _settings;
+        if (!forceRefresh && settings.Store.WarrantyInfo.HasValue)
+            return settings.Store.WarrantyInfo.Value;
 
-        public WarrantyChecker(ApplicationSettings settings)
-        {
-            _settings = settings;
-        }
+        using var httpClient = httpClientFactory.Create();
 
-        public async Task<WarrantyInfo?> GetWarrantyInfo(MachineInformation machineInformation, bool forceRefresh = false, CancellationToken token = default)
-        {
-            if (!forceRefresh && _settings.Store.WarrantyInfo.HasValue)
-                return _settings.Store.WarrantyInfo.Value;
+        var warrantyInfo = await GetStandardWarrantyInfo(httpClient, machineInformation, token).ConfigureAwait(false);
 
-            using var httpClient = new HttpClient();
+        settings.Store.WarrantyInfo = warrantyInfo;
+        settings.SynchronizeStore();
 
-            var warrantyInfo = await GetStandardWarrantyInfo(httpClient, machineInformation, token);
-            warrantyInfo ??= await GetChineseWarrantyInfo(httpClient, machineInformation, token);
+        return warrantyInfo;
+    }
 
-            _settings.Store.WarrantyInfo = warrantyInfo;
-            _settings.SynchronizeStore();
+    private static async Task<WarrantyInfo?> GetStandardWarrantyInfo(HttpClient httpClient, MachineInformation machineInformation, CancellationToken token)
+    {
+        var content = JsonContent.Create(new { serialNumber = machineInformation.SerialNumber, machineType = machineInformation.MachineType });
+        var response = await httpClient.PostAsync("https://pcsupport.lenovo.com/dk/en/api/v4/upsell/redport/getIbaseInfo", content, token).ConfigureAwait(false);
+        var responseContent = await response.Content.ReadAsStringAsync(token).ConfigureAwait(false);
+        var node = JsonNode.Parse(responseContent);
 
-            return warrantyInfo;
-        }
+        if (node is null || node["code"]?.GetValue<int>() != 0)
+            return null;
 
-        private async Task<WarrantyInfo?> GetStandardWarrantyInfo(HttpClient httpClient, MachineInformation machineInformation,
-            CancellationToken token)
-        {
-            var warrantySummaryString = await httpClient.GetStringAsync($"https://pcsupport.lenovo.com/api/v4/upsellAggregation/vantage/warrantySummaryInfo?geo=us&language=en&sn={machineInformation.SerialNumber}", token).ConfigureAwait(false);
+        var baseWarranties = node["data"]?["baseWarranties"]?.AsArray() ?? [];
+        var upgradeWarranties = node["data"]?["upgradeWarranties"]?.AsArray() ?? [];
 
-            var warrantySummaryNode = JsonNode.Parse(warrantySummaryString);
-            var dataNode = warrantySummaryNode?["data"];
+        var startDate = baseWarranties.Concat(upgradeWarranties)
+            .Select(n => n?["startDate"])
+            .Where(n => n is not null)
+            .Select(n => DateTime.Parse(n!.ToString()))
+            .Min();
+        var endDate = baseWarranties.Concat(upgradeWarranties)
+            .Select(n => n?["endDate"])
+            .Where(n => n is not null)
+            .Select(n => DateTime.Parse(n!.ToString()))
+            .Max();
 
-            if (dataNode is null)
-                return null;
+        var productString = await httpClient.GetStringAsync($"https://pcsupport.lenovo.com/dk/en/api/v4/mse/getproducts?productId={machineInformation.SerialNumber}", token).ConfigureAwait(false);
+        var productNode = JsonNode.Parse(productString);
+        var firstProductNode = (productNode as JsonArray)?.FirstOrDefault();
+        var id = firstProductNode?["Id"];
+        var link = id is null ? null : new Uri($"https://pcsupport.lenovo.com/products/{id}");
 
-            var warrantyStatus = dataNode?["warrantyStatus"]?.ToString();
-            var startDateString = dataNode?["startDate"]?.ToString();
-            var endDateString = dataNode?["endDate"]?.ToString();
-
-            DateTime? startDate = startDateString is null ? null : DateTime.Parse(startDateString);
-            DateTime? endDate = endDateString is null ? null : DateTime.Parse(endDateString);
-
-            var productString = await httpClient.GetStringAsync($"https://pcsupport.lenovo.com/dk/en/api/v4/mse/getproducts?productId={machineInformation.SerialNumber}", token).ConfigureAwait(false);
-
-            var productNode = JsonNode.Parse(productString);
-            var firstProductNode = (productNode as JsonArray)?.FirstOrDefault();
-            var id = firstProductNode?["Id"];
-
-            var link = id is null ? null : new Uri($"https://pcsupport.lenovo.com/products/{id}");
-
-            var warrantyInfo = new WarrantyInfo
-            {
-                Status = warrantyStatus,
-                Start = startDate,
-                End = endDate,
-                Link = link,
-            };
-
-            return warrantyInfo;
-        }
-
-        private async Task<WarrantyInfo?> GetChineseWarrantyInfo(HttpClient httpClient, MachineInformation machineInformation, CancellationToken token)
-        {
-            var warrantySummaryString = await httpClient.GetStringAsync($"https://msupport.lenovo.com.cn/centerapi/devicedetail?sn={machineInformation.SerialNumber}", token).ConfigureAwait(false);
-
-            var warrantySummaryNode = JsonNode.Parse(warrantySummaryString);
-            var dataNode = warrantySummaryNode?["data"];
-
-            if (dataNode is null)
-                return null;
-
-            var startDateString = dataNode["warranty_start"]?.ToString();
-            var endDateString = dataNode["warranty_end"]?.ToString();
-
-            DateTime? startDate = startDateString is null ? null : DateTime.Parse(startDateString);
-            DateTime? endDate = endDateString is null ? null : DateTime.Parse(endDateString);
-
-            var status = "In Warranty";
-            var now = DateTime.Now;
-            if (now > endDate)
-                status = "Out of Warranty";
-
-            var link = new Uri($"https://newsupport.lenovo.com.cn/deviceGuarantee.html?fromsource=deviceGuarantee&selname={machineInformation.SerialNumber}");
-
-            var warrantyInfo = new WarrantyInfo
-            {
-                Status = status,
-                Start = startDate,
-                End = endDate,
-                Link = link,
-            };
-
-            return warrantyInfo;
-        }
+        return new WarrantyInfo(startDate, endDate, link);
     }
 }
