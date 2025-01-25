@@ -1,6 +1,4 @@
-#define public Dependency_NoExampleSetup
-
-#include "CodeDependencies\CodeDependencies.iss"
+#include "InnoDependencies\install_dotnet.iss"
 
 #define MyAppName "Lenovo Legion Toolkit"
 #define MyAppNameCompact "LenovoLegionToolkit"
@@ -26,7 +24,7 @@ DisableProgramGroupPage=yes
 LicenseFile=LICENSE
 PrivilegesRequired=admin
 OutputBaseFilename=LenovoLegionToolkitSetup
-Compression=lzma2  
+Compression=lzma2/ultra64  
 SolidCompression=yes
 WizardStyle=modern
 UninstallDisplayIcon={app}\{#MyAppExeName}
@@ -36,12 +34,35 @@ ArchitecturesInstallIn64BitMode=x64
 [Code]
 function InitializeSetup: Boolean;
 begin
-  Dependency_AddDotNet60Desktop;
+  InstallDotNet6DesktopRuntime;
   Result := True;
 end;
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "en";      MessagesFile: "compiler:Default.isl"
+Name: "ptbr";    MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "bg";      MessagesFile: "compiler:Languages\Bulgarian.isl" 
+Name: "cs";      MessagesFile: "compiler:Languages\Czech.isl" 
+Name: "nlnl";    MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "fr";      MessagesFile: "compiler:Languages\French.isl"
+Name: "de";      MessagesFile: "compiler:Languages\German.isl"
+Name: "hu";      MessagesFile: "compiler:Languages\Hungarian.isl"
+Name: "it";      MessagesFile: "compiler:Languages\Italian.isl"
+Name: "ja";      MessagesFile: "compiler:Languages\Japanese.isl"
+Name: "pl";      MessagesFile: "compiler:Languages\Polish.isl"
+Name: "pt";      MessagesFile: "compiler:Languages\Portuguese.isl"
+Name: "ru";      MessagesFile: "compiler:Languages\Russian.isl"
+Name: "sk";      MessagesFile: "compiler:Languages\Slovak.isl"
+Name: "es";      MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "tr";      MessagesFile: "compiler:Languages\Turkish.isl"
+Name: "ukr";     MessagesFile: "compiler:Languages\Ukrainian.isl"
+Name: "ar";      MessagesFile: "InnoDependencies\Arabic.isl"
+Name: "lv";      MessagesFile: "InnoDependencies\Latvian.isl"
+Name: "zhhans";  MessagesFile: "InnoDependencies\ChineseSimplified.isl"
+Name: "zhhant";  MessagesFile: "InnoDependencies\ChineseTraditional.isl"
+Name: "el";      MessagesFile: "InnoDependencies\Greek.isl"
+Name: "ro";      MessagesFile: "InnoDependencies\Romanian.isl"
+Name: "vi";      MessagesFile: "InnoDependencies\Vietnamese.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -49,7 +70,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-Source: "CodeDependencies\netcorecheck_x64.exe";  DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -59,7 +79,7 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 Type: filesandordirs; Name: "{app}"
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: runascurrentuser nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: runascurrentuser nowait postinstall
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{localappdata}\{#MyAppNameCompact}"

@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Steps
-{
-    public class BatteryAutomationStep : AbstractFeatureAutomationStep<BatteryState>
-    {
-        [JsonConstructor]
-        public BatteryAutomationStep(BatteryState state) : base(state) { }
+namespace LenovoLegionToolkit.Lib.Automation.Steps;
 
-        public override IAutomationStep DeepCopy() => new BatteryAutomationStep(State);
-    }
+[method: JsonConstructor]
+public class BatteryAutomationStep(BatteryState state)
+    : AbstractFeatureAutomationStep<BatteryState>(state)
+{
+    public override IAutomationStep DeepCopy() => new BatteryAutomationStep(State);
 }

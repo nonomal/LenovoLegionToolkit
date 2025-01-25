@@ -5,33 +5,31 @@ using System.Linq;
 using NvAPIWrapper.GPU;
 using NvAPIWrapper.Native;
 
-namespace LenovoLegionToolkit.Lib.Extensions
+namespace LenovoLegionToolkit.Lib.Extensions;
+
+public static class NVAPIExtensions
 {
-    public static class NVAPIExtensions
+    private static readonly string[] Exclusions =
+    [
+        "dwm.exe",
+        "explorer.exe",
+    ];
+
+    public static List<Process> GetActiveProcesses(PhysicalGPU gpu)
     {
-        private static readonly string[] _exclusions = new[]
-        {
-            "dwm.exe",
-            "explorer.exe",
-        };
+        var processes = new List<Process>();
+        var apps = GPUApi.QueryActiveApps(gpu.Handle).Where(app => !Exclusions.Contains(app.ProcessName, StringComparer.InvariantCultureIgnoreCase));
 
-        public static List<Process> GetActiveProcesses(PhysicalGPU gpu)
+        foreach (var app in apps)
         {
-            var processes = new List<Process>();
-            var apps = GPUApi.QueryActiveApps(gpu.Handle).Where(app => !_exclusions.Contains(app.ProcessName, StringComparer.InvariantCultureIgnoreCase));
-
-            foreach (var app in apps)
+            try
             {
-                try
-                {
-                    var process = Process.GetProcessById(app.ProcessId);
-                    processes.Add(process);
-                }
-                catch (ArgumentException) { }
+                var process = Process.GetProcessById(app.ProcessId);
+                processes.Add(process);
             }
-
-            return processes;
+            catch (ArgumentException) { }
         }
-    }
 
+        return processes;
+    }
 }

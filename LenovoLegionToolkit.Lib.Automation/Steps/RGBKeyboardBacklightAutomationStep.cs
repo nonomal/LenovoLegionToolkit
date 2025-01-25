@@ -1,30 +1,33 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.Controllers;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
 
-namespace LenovoLegionToolkit.Lib.Automation.Steps
+namespace LenovoLegionToolkit.Lib.Automation.Steps;
+
+public class RGBKeyboardBacklightAutomationStep(RGBKeyboardBacklightPreset state)
+    : IAutomationStep<RGBKeyboardBacklightPreset>
 {
-    public class RGBKeyboardBacklightAutomationStep : IAutomationStep<RGBKeyboardBacklightPreset>
+    private readonly RGBKeyboardBacklightController _controller = IoCContainer.Resolve<RGBKeyboardBacklightController>();
+
+    public RGBKeyboardBacklightPreset State { get; } = state;
+
+    public Task<RGBKeyboardBacklightPreset[]> GetAllStatesAsync() => Task.FromResult(Enum.GetValues<RGBKeyboardBacklightPreset>());
+
+    public Task<bool> IsSupportedAsync() => _controller.IsSupportedAsync();
+
+    public async Task RunAsync(AutomationContext context, AutomationEnvironment environment, CancellationToken token)
     {
-        private readonly RGBKeyboardBacklightController _controller = IoCContainer.Resolve<RGBKeyboardBacklightController>();
+        if (!await _controller.IsSupportedAsync().ConfigureAwait(false))
+            return;
 
-        public RGBKeyboardBacklightPreset State { get; }
+        await _controller.SetLightControlOwnerAsync(true).ConfigureAwait(false);
+        await _controller.SetPresetAsync(State).ConfigureAwait(false);
 
-        public RGBKeyboardBacklightAutomationStep(RGBKeyboardBacklightPreset state) => State = state;
-
-        public Task<RGBKeyboardBacklightPreset[]> GetAllStatesAsync() => Task.FromResult(Enum.GetValues<RGBKeyboardBacklightPreset>());
-
-        public Task<bool> IsSupportedAsync() => _controller.IsSupportedAsync();
-
-        public async Task RunAsync()
-        {
-            if (!await _controller.IsSupportedAsync())
-                return;
-
-            await _controller.SetLightControlOwnerAsync(true).ConfigureAwait(false);
-            await _controller.SetPresetAsync(State).ConfigureAwait(false);
-        }
-
-        IAutomationStep IAutomationStep.DeepCopy() => new RGBKeyboardBacklightAutomationStep(State);
+        MessagingCenter.Publish(new RGBKeyboardBacklightChangedMessage());
     }
+
+    IAutomationStep IAutomationStep.DeepCopy() => new RGBKeyboardBacklightAutomationStep(State);
 }

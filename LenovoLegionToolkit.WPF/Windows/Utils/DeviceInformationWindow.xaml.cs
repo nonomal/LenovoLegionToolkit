@@ -6,99 +6,82 @@ using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Utils;
 using LenovoLegionToolkit.WPF.Extensions;
 using LenovoLegionToolkit.WPF.Resources;
+using LenovoLegionToolkit.WPF.Utils;
 using Wpf.Ui.Controls;
 
-namespace LenovoLegionToolkit.WPF.Windows.Utils
+namespace LenovoLegionToolkit.WPF.Windows.Utils;
+
+public partial class DeviceInformationWindow
 {
-    public partial class DeviceInformationWindow
+    private readonly WarrantyChecker _warrantyChecker = IoCContainer.Resolve<WarrantyChecker>();
+
+    public DeviceInformationWindow() => InitializeComponent();
+
+    private async void DeviceInformationWindow_Loaded(object sender, RoutedEventArgs e) => await RefreshAsync();
+
+    private async Task RefreshAsync(bool forceRefresh = false)
     {
-        private readonly WarrantyChecker _warrantyChecker = IoCContainer.Resolve<WarrantyChecker>();
+        var mi = await Compatibility.GetMachineInformationAsync();
 
-        public DeviceInformationWindow() => InitializeComponent();
+        _manufacturerLabel.Text = mi.Vendor;
+        _modelLabel.Text = mi.Model;
+        _mtmLabel.Text = mi.MachineType;
+        _serialNumberLabel.Text = mi.SerialNumber;
+        _biosLabel.Text = mi.BiosVersionRaw;
 
-        private async void DeviceInformationWindow_Loaded(object sender, RoutedEventArgs e) => await RefreshAsync();
-
-        private async Task RefreshAsync(bool forceRefresh = false)
+        try
         {
-            var mi = await Compatibility.GetMachineInformationAsync();
+            _refreshWarrantyButton.IsEnabled = false;
 
-            _manufacturerLabel.Content = mi.Vendor;
-            _modelLabel.Content = mi.Model;
-            _mtmLabel.Content = mi.MachineType;
-            _serialNumberLabel.Content = mi.SerialNumber;
-            _biosLabel.Content = mi.BIOSVersion;
+            _warrantyStartLabel.Text = "-";
+            _warrantyEndLabel.Text = "-";
+            _warrantyLinkCardAction.Tag = null;
+            _warrantyLinkCardAction.IsEnabled = false;
 
-            try
-            {
-                _refreshWarrantyButton.IsEnabled = false;
+            var warrantyInfo = await _warrantyChecker.GetWarrantyInfo(mi, forceRefresh);
 
-                _warrantyStatusLabel.Content = "-";
-                _warrantyStartLabel.Content = "-";
-                _warrantyEndLabel.Content = "-";
-                _warrantyLinkCardAction.Tag = null;
-                _warrantyLinkCardAction.IsEnabled = false;
-
-                var warrantyInfo = await _warrantyChecker.GetWarrantyInfo(mi, forceRefresh);
-                _warrantyLinkCardAction.IsEnabled = false;
-
-                if (!warrantyInfo.HasValue)
-                    return;
-
-                _warrantyStatusLabel.Content = TryLocalizeStatus(warrantyInfo.Value.Status);
-                _warrantyStartLabel.Content = warrantyInfo.Value.Start is not null ? $"{warrantyInfo.Value.Start:d}" : "-";
-                _warrantyEndLabel.Content = warrantyInfo.Value.End is not null ? $"{warrantyInfo.Value.End:d}" : "-";
-                _warrantyLinkCardAction.Tag = warrantyInfo.Value.Link;
-
-                _warrantyLinkCardAction.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Couldn't load warranty info.", ex);
-            }
-            finally
-            {
-                _refreshWarrantyButton.IsEnabled = true;
-            }
-        }
-
-        private static string TryLocalizeStatus(string? status)
-        {
-            if (status is null)
-                return "-";
-
-            if (status.Equals("In Warranty", StringComparison.CurrentCultureIgnoreCase))
-                return Resource.DeviceInformationWindow_InWarranty;
-
-            if (status.Equals("Out of Warranty", StringComparison.CurrentCultureIgnoreCase))
-                return Resource.DeviceInformationWindow_OutOfWarranty;
-
-            return status;
-        }
-
-        private async void RefreshWarrantyButton_OnClick(object sender, RoutedEventArgs e) => await RefreshAsync(true);
-
-        private async void DeviceCardControl_Click(object sender, RoutedEventArgs e)
-        {
-            if (((sender as CardControl)?.Content as Label)?.Content is not string str)
+            if (!warrantyInfo.HasValue)
                 return;
 
-            try
-            {
-                Clipboard.SetText(str);
-                await _snackBar.ShowAsync(Resource.DeviceInformationWindow_Copied_Title, string.Format(Resource.DeviceInformationWindow_Copied_Message, str));
-            }
-            catch (Exception ex)
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Couldn't copy to clipboard", ex);
-            }
+            _warrantyStartLabel.Text = warrantyInfo.Value.Start is not null ? warrantyInfo.Value.Start?.ToString(LocalizationHelper.ShortDateFormat) : "-";
+            _warrantyEndLabel.Text = warrantyInfo.Value.End is not null ? warrantyInfo.Value.End?.ToString(LocalizationHelper.ShortDateFormat) : "-";
+            _warrantyLinkCardAction.Tag = warrantyInfo.Value.Link;
+            _warrantyLinkCardAction.IsEnabled = true;
+            _warrantyInfo.Visibility = Visibility.Visible;
         }
-
-        private void WarrantyLinkCardAction_OnClick(object sender, RoutedEventArgs e)
+        catch (Exception ex)
         {
-            var link = _warrantyLinkCardAction.Tag as Uri;
-            link?.Open();
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Couldn't load warranty info.", ex);
         }
+        finally
+        {
+            _refreshWarrantyButton.IsEnabled = true;
+        }
+    }
+
+    private async void RefreshWarrantyButton_OnClick(object sender, RoutedEventArgs e) => await RefreshAsync(true);
+
+    private async void DeviceCardControl_Click(object sender, RoutedEventArgs e)
+    {
+        if (((sender as CardControl)?.Content as TextBlock)?.Text is not { } str)
+            return;
+
+        try
+        {
+            Clipboard.SetText(str);
+            await _snackBar.ShowAsync(Resource.CopiedToClipboard_Title, string.Format(Resource.CopiedToClipboard_Message_WithParam, str));
+        }
+        catch (Exception ex)
+        {
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Couldn't copy to clipboard", ex);
+        }
+    }
+
+    private void WarrantyLinkCardAction_OnClick(object sender, RoutedEventArgs e)
+    {
+        var link = _warrantyLinkCardAction.Tag as Uri;
+        link?.Open();
     }
 }
