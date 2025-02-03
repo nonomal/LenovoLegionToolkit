@@ -1,83 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
+using LenovoLegionToolkit.WPF.Extensions;
 using Wpf.Ui.Common;
-using Wpf.Ui.Controls;
+using CardControl = LenovoLegionToolkit.WPF.Controls.Custom.CardControl;
 
-namespace LenovoLegionToolkit.WPF.Controls.KeyboardBacklight.RGB
+namespace LenovoLegionToolkit.WPF.Controls.KeyboardBacklight.RGB;
+
+public abstract class AbstractComboBoxRGBKeyboardCardControl<T> : UserControl
 {
-    public abstract class AbstractComboBoxRGBKeyboardCardControl<T> : UserControl
+    private readonly CardControl _cardControl = new();
+
+    private readonly CardHeaderControl _cardHeaderControl = new();
+
+    private readonly ComboBox _comboBox = new();
+
+    public SymbolRegular Icon
     {
-        private readonly CardControl _cardControl = new();
+        get => _cardControl.Icon;
+        set => _cardControl.Icon = value;
+    }
 
-        private readonly CardHeaderControl _cardHeaderControl = new();
-
-        private readonly ComboBox _comboBox = new();
-
-        public SymbolRegular Icon
+    public string Title
+    {
+        get => _cardHeaderControl.Title;
+        set
         {
-            get => _cardControl.Icon;
-            set => _cardControl.Icon = value;
-        }
+            _cardHeaderControl.Title = value;
 
-        public string Title
+            AutomationProperties.SetName(_comboBox, value);
+        }
+    }
+
+    public string Subtitle
+    {
+        get => _cardHeaderControl.Subtitle;
+        set => _cardHeaderControl.Subtitle = value;
+    }
+
+    public T? SelectedItem
+    {
+        get
         {
-            get => _cardHeaderControl.Title;
-            set => _cardHeaderControl.Title = value;
+            if (_comboBox.TryGetSelectedItem(out T? item))
+                return item;
+            return default;
         }
+    }
 
-        public string Subtitle
-        {
-            get => _cardHeaderControl.Subtitle;
-            set => _cardHeaderControl.Subtitle = value;
-        }
+    public event EventHandler? OnChanged;
 
-        public T? SelectedItem
-        {
-            get
-            {
-                if (_comboBox.TryGetSelectedItem(out T? item))
-                    return item;
-                return default;
-            }
-        }
+    public AbstractComboBoxRGBKeyboardCardControl() => InitializeComponent();
 
-        public event EventHandler? OnChanged;
+    private void InitializeComponent()
+    {
+        IsEnabledChanged += CardControl_IsEnabledChanged;
 
-        public AbstractComboBoxRGBKeyboardCardControl() => InitializeComponent();
+        _comboBox.SelectionChanged += ComboBox_SelectionChanged;
+        _comboBox.MinWidth = 150;
 
-        private void InitializeComponent()
-        {
-            IsEnabledChanged += CardControl_IsEnabledChanged;
+        _cardHeaderControl.Accessory = _comboBox;
+        _cardControl.Header = _cardHeaderControl;
+        _cardControl.Margin = new(0, 0, 0, 8);
 
-            _comboBox.SelectionChanged += ComboBox_SelectionChanged;
-            _comboBox.MinWidth = 150;
+        Content = _cardControl;
+    }
 
-            _cardHeaderControl.Accessory = _comboBox;
-            _cardControl.Header = _cardHeaderControl;
-            _cardControl.Margin = new(0, 0, 0, 8);
+    private void CardControl_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (IsEnabled)
+            return;
 
-            Content = _cardControl;
-        }
+        _comboBox.SelectionChanged -= ComboBox_SelectionChanged;
+        _comboBox.ClearItems();
+        _comboBox.SelectionChanged += ComboBox_SelectionChanged;
+    }
 
-        private void CardControl_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsEnabled)
-                return;
+    private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => OnChanged?.Invoke(this, EventArgs.Empty);
 
-            _comboBox.SelectionChanged -= ComboBox_SelectionChanged;
-            _comboBox.ClearItems();
-            _comboBox.SelectionChanged += ComboBox_SelectionChanged;
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => OnChanged?.Invoke(this, EventArgs.Empty);
-
-        public void SetItems(IEnumerable<T> items, T selectedItem, Func<T, string>? displayValueConverter)
-        {
-            _comboBox.SelectionChanged -= ComboBox_SelectionChanged;
-            _comboBox.SetItems(items, selectedItem, displayValueConverter);
-            _comboBox.SelectionChanged += ComboBox_SelectionChanged;
-        }
+    public void SetItems(IEnumerable<T> items, T selectedItem, Func<T, string>? displayValueConverter)
+    {
+        _comboBox.SelectionChanged -= ComboBox_SelectionChanged;
+        _comboBox.SetItems(items, selectedItem, displayValueConverter);
+        _comboBox.SelectionChanged += ComboBox_SelectionChanged;
     }
 }

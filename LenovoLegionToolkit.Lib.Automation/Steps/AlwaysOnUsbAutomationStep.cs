@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Steps
-{
-    public class AlwaysOnUsbAutomationStep : AbstractFeatureAutomationStep<AlwaysOnUSBState>
-    {
-        [JsonConstructor]
-        public AlwaysOnUsbAutomationStep(AlwaysOnUSBState state) : base(state) { }
+namespace LenovoLegionToolkit.Lib.Automation.Steps;
 
-        public override IAutomationStep DeepCopy() => new AlwaysOnUsbAutomationStep(State);
-    }
+[method: JsonConstructor]
+public class AlwaysOnUsbAutomationStep(AlwaysOnUSBState state)
+    : AbstractFeatureAutomationStep<AlwaysOnUSBState>(state)
+{
+    public override IAutomationStep DeepCopy() => new AlwaysOnUsbAutomationStep(State);
 }

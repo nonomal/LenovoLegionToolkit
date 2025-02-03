@@ -1,7 +1,6 @@
-﻿namespace LenovoLegionToolkit.Lib.Features
-{
-    public class WinKeyFeature : AbstractLenovoGamezoneWmiFeature<WinKeyState>
-    {
-        public WinKeyFeature() : base("WinKeyStatus", 0, "IsSupportDisableWinKey") { }
-    }
-}
+﻿using LenovoLegionToolkit.Lib.System.Management;
+
+namespace LenovoLegionToolkit.Lib.Features;
+
+public class WinKeyFeature()
+    : AbstractWmiFeature<WinKeyState>(WMI.LenovoGameZoneData.GetWinKeyStatusAsync, WMI.LenovoGameZoneData.SetWinKeyStatusAsync, WMI.LenovoGameZoneData.IsSupportDisableWinKeyAsync);

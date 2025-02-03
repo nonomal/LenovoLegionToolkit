@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Steps
-{
-    public class OverDriveAutomationStep : AbstractFeatureAutomationStep<OverDriveState>
-    {
-        [JsonConstructor]
-        public OverDriveAutomationStep(OverDriveState state) : base(state) { }
+namespace LenovoLegionToolkit.Lib.Automation.Steps;
 
-        public override IAutomationStep DeepCopy() => new OverDriveAutomationStep(State);
-    }
+[method: JsonConstructor]
+public class OverDriveAutomationStep(OverDriveState state)
+    : AbstractFeatureAutomationStep<OverDriveState>(state)
+{
+    public override IAutomationStep DeepCopy() => new OverDriveAutomationStep(State);
 }

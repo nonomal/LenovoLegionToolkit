@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -91,11 +150,35 @@
   <data name="BatteryState_RapidCharge" xml:space="preserve">
     <value>Быстрая зарядка</value>
   </data>
+  <data name="FlipToStartState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that Flip to Start is or will be turned off.</comment>
+  </data>
+  <data name="FlipToStartState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that Flip to Start is or will be turned on.</comment>
+  </data>
+  <data name="FnLockState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that Fn Lock is or will be turned off.</comment>
+  </data>
+  <data name="FnLockState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that Fn Lock is or will be turned on.</comment>
+  </data>
   <data name="GPUController_PoweredOff" xml:space="preserve">
     <value>Отключен</value>
   </data>
   <data name="GPUController_PoweredOn" xml:space="preserve">
     <value>Задействован</value>
+  </data>
+  <data name="HDRState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that HDR is or will be turned off.</comment>
+  </data>
+  <data name="HDRState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that HDR is or will be turned on.</comment>
   </data>
   <data name="HybridModeState_Off" xml:space="preserve">
     <value>Дискретная видеокарта</value>
@@ -108,6 +191,14 @@
   </data>
   <data name="HybridModeState_OnIGPUOnly" xml:space="preserve">
     <value>Hybrid-iGPU</value>
+  </data>
+  <data name="MicrophoneState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that the microphone is or will be turned off.</comment>
+  </data>
+  <data name="MicrophoneState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that the microphone is or will be turned on.</comment>
   </data>
   <data name="NotificationPosition_BottomCenter" xml:space="preserve">
     <value>Внизу по центру</value>
@@ -136,6 +227,22 @@
   <data name="NotificationPosition_TopRight" xml:space="preserve">
     <value>Вверху справа</value>
   </data>
+  <data name="OneLevelWhiteKeyboardBacklightState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that One Level White Keyboard Backlight is or will be turned off.</comment>
+  </data>
+  <data name="OneLevelWhiteKeyboardBacklightState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that One Level White Keyboard Backlight is or will be turned on.</comment>
+  </data>
+  <data name="OverdriveState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that Overdrive is or will be turned off.</comment>
+  </data>
+  <data name="OverdriveState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that Overdrive is or will be turned on.</comment>
+  </data>
   <data name="PowerModeState_Balance" xml:space="preserve">
     <value>Сбалансированный</value>
   </data>
@@ -148,16 +255,16 @@
   <data name="PowerModeState_Quiet" xml:space="preserve">
     <value>Тихий режим</value>
   </data>
-  <data name="RBGKeyboardBacklightSpeed_Fast" xml:space="preserve">
+  <data name="RGBKeyboardBacklightSpeed_Fast" xml:space="preserve">
     <value>Быстро</value>
   </data>
-  <data name="RBGKeyboardBacklightSpeed_Fastest" xml:space="preserve">
+  <data name="RGBKeyboardBacklightSpeed_Fastest" xml:space="preserve">
     <value>Самая быстрая</value>
   </data>
-  <data name="RBGKeyboardBacklightSpeed_Slow" xml:space="preserve">
+  <data name="RGBKeyboardBacklightSpeed_Slow" xml:space="preserve">
     <value>Медленно</value>
   </data>
-  <data name="RBGKeyboardBacklightSpeed_Slowest" xml:space="preserve">
+  <data name="RGBKeyboardBacklightSpeed_Slowest" xml:space="preserve">
     <value>Самая медленная</value>
   </data>
   <data name="RGBKeyboardBacklightBrightness_High" xml:space="preserve">
@@ -280,6 +387,14 @@
   <data name="Theme_System" xml:space="preserve">
     <value>Системная тема</value>
   </data>
+  <data name="TouchpadLockState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that Touchpad Lock is or will be turned off.</comment>
+  </data>
+  <data name="TouchpadLockState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that Touchpad Lock is or will be turned on.</comment>
+  </data>
   <data name="WhiteKeyboardBacklightState_High" xml:space="preserve">
     <value>Высокая</value>
   </data>
@@ -288,5 +403,79 @@
   </data>
   <data name="WhiteKeyboardBacklightState_Off" xml:space="preserve">
     <value>Откл.</value>
+  </data>
+  <data name="WinKeyState_Off" xml:space="preserve">
+    <value>Откл.</value>
+    <comment>Informs the user that WinLock is or will be turned on.</comment>
+  </data>
+  <data name="WinKeyState_On" xml:space="preserve">
+    <value>Вкл.</value>
+    <comment>Informs the user that WinLock is or will be turned on.</comment>
+  </data>
+  <data name="PortsBacklightState_Off" xml:space="preserve">
+    <value>Откл.</value>
+  </data>
+  <data name="PortsBacklightState_On" xml:space="preserve">
+    <value>Вкл.</value>
+  </data>
+  <data name="PanelLogoBacklightState_On" xml:space="preserve">
+    <value>Вкл.</value>
+  </data>
+  <data name="PanelLogoBacklightState_Off" xml:space="preserve">
+    <value>Откл.</value>
+  </data>
+  <data name="InstantBootState_Off" xml:space="preserve">
+    <value>Откл.</value>
+  </data>
+  <data name="InstantBootState_AcAdapter" xml:space="preserve">
+    <value>Сетевой адаптер</value>
+  </data>
+  <data name="InstantBootState_UsbPowerDelivery" xml:space="preserve">
+    <value>Питание от USB</value>
+  </data>
+  <data name="InstantBootState_AcAdapterAndUsbPowerDelivery" xml:space="preserve">
+    <value>Сетевой адаптер и питание по USB</value>
+  </data>
+  <data name="NotificationDuration_Long" xml:space="preserve">
+    <value>Долго</value>
+  </data>
+  <data name="NotificationDuration_Normal" xml:space="preserve">
+    <value>По умолчанию</value>
+  </data>
+  <data name="NotificationDuration_Short" xml:space="preserve">
+    <value>Короткая</value>
+  </data>
+  <data name="ModifierKey_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="ModifierKey_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="ModifierKey_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="BatteryNightChargeState_On" xml:space="preserve">
+    <value>Вкл.</value>
+  </data>
+  <data name="BatteryNightChargeState_Off" xml:space="preserve">
+    <value>Откл.</value>
+  </data>
+  <data name="SpeakerState_Mute" xml:space="preserve">
+    <value>Выкл. звук</value>
+  </data>
+  <data name="SpeakerState_Unmute" xml:space="preserve">
+    <value>Вкл. звук</value>
+  </data>
+  <data name="PowerModeMappingMode_Disabled" xml:space="preserve">
+    <value>Отключен</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerMode" xml:space="preserve">
+    <value>Схема питания Windows</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerPlan" xml:space="preserve">
+    <value>Режим питания Windows</value>
+  </data>
+  <data name="RGBKeyboardBacklightPreset_Four" xml:space="preserve">
+    <value>Пресет 4</value>
   </data>
 </root>

@@ -3,9 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:wpfui="http://schemas.lepo.co/wpfui/2022/xaml">
 
-    <!--
-        Always visible scrollbar when mouse is over DynamicScrollViewer
-    -->
+    <!--  ReSharper disable Xaml.StaticResourceNotResolved  -->
+
     <ControlTemplate x:Key="DynamicVerticalScrollBar" TargetType="{x:Type wpfui:DynamicScrollBar}">
         <Grid>
             <Grid.RowDefinitions>
@@ -137,4 +136,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <!--  ReSharper restore Xaml.StaticResourceNotResolved  -->
+
 </ResourceDictionary>

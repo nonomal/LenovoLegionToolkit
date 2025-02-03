@@ -1,53 +1,67 @@
 ﻿using System;
 using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.System;
+using LenovoLegionToolkit.Lib.Utils;
 
-namespace LenovoLegionToolkit.Lib.Listeners
+namespace LenovoLegionToolkit.Lib.Listeners;
+
+public class SystemThemeListener : IListener<EventArgs>
 {
-    public class SystemThemeListener : IListener<EventArgs>
+    public event EventHandler<EventArgs>? Changed;
+
+    private IDisposable? _darkModeListener;
+    private IDisposable? _colorizationColorListener;
+
+    private RGBColor? _currentRegColor;
+
+    private bool _started;
+
+    public Task StartAsync()
     {
-        public event EventHandler<EventArgs>? Changed;
-
-        private IDisposable? _darkModeListener, _accentColorListener;
-
-        private RGBColor? _currentRegColor;
-
-        private bool _started;
-
-        public Task StartAsync()
-        {
-            if (_started)
-                return Task.CompletedTask;
-
-            _darkModeListener = SystemTheme.GetDarkModeListener(InvokeChangedEvent);
-            _accentColorListener = SystemTheme.GetAccentColorListener(() =>
-            {
-                var color = SystemTheme.GetAccentColorReg();
-
-                // Ignore alpha channel transition events
-                if (_currentRegColor.Equals(color))
-                    return;
-
-                _currentRegColor = color;
-
-                InvokeChangedEvent();
-            });
-
-            _started = true;
-
+        if (_started)
             return Task.CompletedTask;
-        }
 
-        public Task StopAsync()
+        _darkModeListener = SystemTheme.GetDarkModeListener(OnDarkModeChanged);
+        _colorizationColorListener = SystemTheme.GetColorizationColorListener(OnColorizationColorChanged);
+
+        _started = true;
+
+        return Task.CompletedTask;
+    }
+
+    private void OnDarkModeChanged()
+    {
+        Changed?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnColorizationColorChanged()
+    {
+        try
         {
-            _darkModeListener?.Dispose();
-            _accentColorListener?.Dispose();
+            var color = SystemTheme.GetColorizationColor();
 
-            _started = false;
+            // Ignore alpha channel transition events
+            if (color.Equals(_currentRegColor))
+                return;
 
-            return Task.CompletedTask;
+            _currentRegColor = color;
+
+            Changed?.Invoke(this, EventArgs.Empty);
         }
+        catch (Exception ex)
+        {
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Failed to notify on accent color change.", ex);
+        }
+    }
 
-        private void InvokeChangedEvent() => Changed?.Invoke(this, EventArgs.Empty);
+    public Task StopAsync()
+    {
+        _darkModeListener?.Dispose();
+        _colorizationColorListener?.Dispose();
+
+        _started = false;
+
+        return Task.CompletedTask;
     }
 }

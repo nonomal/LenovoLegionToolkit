@@ -5,6 +5,7 @@
     xmlns:local="clr-namespace:LenovoLegionToolkit.WPF.Windows"
     xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
     xmlns:resources="clr-namespace:LenovoLegionToolkit.WPF.Resources"
+    xmlns:utils="clr-namespace:LenovoLegionToolkit.WPF.Utils"
     xmlns:wpfui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="{x:Static resources:Resource.UpdateWindow_Title}"
     MinWidth="800"
@@ -13,6 +14,7 @@
     MaxHeight="600"
     Closing="UpdateWindow_Closing"
     ExtendsContentIntoTitleBar="True"
+    FlowDirection="{x:Static utils:LocalizationHelper.Direction}"
     Loaded="UpdateWindow_Loaded"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
@@ -43,6 +45,7 @@
             <TextBlock
                 Grid.Column="0"
                 VerticalAlignment="Center"
+                Focusable="True"
                 FontSize="12"
                 IsHitTestVisible="False"
                 Text="{x:Static resources:Resource.UpdateWindow_Title}" />
@@ -62,11 +65,15 @@
                 <TextBlock
                     Grid.Row="0"
                     Margin="0,0,0,24"
+                    Focusable="True"
                     FontSize="24"
                     FontWeight="Medium"
                     Text="{x:Static resources:Resource.UpdateWindow_WhatsNew}" />
 
-                <markdig:MarkdownViewer x:Name="_markdownViewer" Grid.Row="1" />
+                <markdig:MarkdownViewer
+                    x:Name="_markdownViewer"
+                    Grid.Row="1"
+                    Focusable="True" />
 
                 <ProgressBar
                     x:Name="_downloadProgressBar"
@@ -77,18 +84,19 @@
                     Minimum="0"
                     Visibility="Hidden" />
 
-                <Button
+                <wpfui:Button
                     x:Name="_downloadButton"
                     Grid.Row="3"
                     Width="150"
                     Height="32"
                     Margin="0,0,0,16"
                     HorizontalAlignment="Center"
+                    Appearance="Primary"
                     Click="DownloadButton_Click"
                     Content="{x:Static resources:Resource.Update}"
                     IsEnabled="False" />
 
-                <Button
+                <wpfui:Button
                     x:Name="_cancelDownloadButton"
                     Grid.Row="4"
                     Width="150"

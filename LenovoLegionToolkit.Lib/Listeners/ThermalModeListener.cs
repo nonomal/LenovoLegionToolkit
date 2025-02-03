@@ -1,27 +1,70 @@
-﻿using System.Management;
+﻿using System;
 using System.Threading.Tasks;
-using LenovoLegionToolkit.Lib.Features;
+using LenovoLegionToolkit.Lib.Controllers;
+using LenovoLegionToolkit.Lib.System.Management;
+using LenovoLegionToolkit.Lib.Utils;
 
-namespace LenovoLegionToolkit.Lib.Listeners
+namespace LenovoLegionToolkit.Lib.Listeners;
+
+public class ThermalModeListener(
+    WindowsPowerModeController windowsPowerModeController,
+    WindowsPowerPlanController windowsPowerPlanController)
+    : AbstractWMIListener<ThermalModeListener.ChangedEventArgs, ThermalModeState, int>(WMI.LenovoGameZoneThermalModeEvent.Listen)
 {
-    public class ThermalModeListener : AbstractWMIListener<ThermalModeState>
+    public class ChangedEventArgs(ThermalModeState state) : EventArgs
     {
-        private readonly PowerModeFeature _powerModeFeature;
-        private readonly PowerModeListener _powerModeListener;
+        public ThermalModeState State { get; } = state;
+    }
 
-        public ThermalModeListener(PowerModeFeature powerModeFeature, PowerModeListener powerModeListener)
-            : base("ROOT\\WMI", "LENOVO_GAMEZONE_THERMAL_MODE_EVENT")
+    private readonly ThreadSafeCounter _suppressCounter = new();
+
+    protected override ThermalModeState GetValue(int value)
+    {
+        var state = (ThermalModeState)value;
+
+        if (!Enum.IsDefined(state))
         {
-            _powerModeFeature = powerModeFeature;
-            _powerModeListener = powerModeListener;
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Unknown value received: {value}");
+
+            state = ThermalModeState.Unknown;
         }
 
-        protected override ThermalModeState GetValue(PropertyDataCollection properties) => ThermalModeState.IrrelevantAndBuggy;
+        return state;
+    }
 
-        protected override async Task OnChangedAsync(ThermalModeState _)
+    protected override ChangedEventArgs GetEventArgs(ThermalModeState value) => new(value);
+
+    protected override async Task OnChangedAsync(ThermalModeState state)
+    {
+        if (!_suppressCounter.Decrement())
         {
-            var state = await _powerModeFeature.GetStateAsync();
-            await _powerModeListener.NotifyAsync(state);
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Suppressed.");
+            return;
         }
+
+        if (state == ThermalModeState.Unknown)
+            return;
+
+        var powerModeState = state switch
+        {
+            ThermalModeState.Quiet => PowerModeState.Quiet,
+            ThermalModeState.Balance => PowerModeState.Balance,
+            ThermalModeState.Performance => PowerModeState.Performance,
+            ThermalModeState.GodMode => PowerModeState.GodMode,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
+        };
+
+        await windowsPowerModeController.SetPowerModeAsync(powerModeState).ConfigureAwait(false);
+        await windowsPowerPlanController.SetPowerPlanAsync(powerModeState).ConfigureAwait(false);
+    }
+
+    public void SuppressNext()
+    {
+        if (Log.Instance.IsTraceEnabled)
+            Log.Instance.Trace($"Suppressing next...");
+
+        _suppressCounter.Increment();
     }
 }

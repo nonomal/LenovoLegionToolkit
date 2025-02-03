@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Steps
-{
-    public class WinKeyAutomationStep : AbstractFeatureAutomationStep<WinKeyState>
-    {
-        [JsonConstructor]
-        public WinKeyAutomationStep(WinKeyState state) : base(state) { }
+namespace LenovoLegionToolkit.Lib.Automation.Steps;
 
-        public override IAutomationStep DeepCopy() => new WinKeyAutomationStep(State);
-    }
+[method: JsonConstructor]
+public class WinKeyAutomationStep(WinKeyState state)
+    : AbstractFeatureAutomationStep<WinKeyState>(state)
+{
+    public override IAutomationStep DeepCopy() => new WinKeyAutomationStep(State);
 }

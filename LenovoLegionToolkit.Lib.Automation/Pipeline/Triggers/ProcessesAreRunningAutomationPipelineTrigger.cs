@@ -3,56 +3,70 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.Automation.Resources;
+using LenovoLegionToolkit.Lib.Extensions;
 using LenovoLegionToolkit.Lib.Utils;
 using Newtonsoft.Json;
 
-namespace LenovoLegionToolkit.Lib.Automation.Pipeline.Triggers
+namespace LenovoLegionToolkit.Lib.Automation.Pipeline.Triggers;
+
+[method: JsonConstructor]
+public class ProcessesAreRunningAutomationPipelineTrigger(ProcessInfo[]? processes) : IProcessesAutomationPipelineTrigger
 {
-    public class ProcessesAreRunningAutomationPipelineTrigger : IAutomationPipelineTrigger, IProcessesAutomationPipelineTrigger
+    public string DisplayName => Resource.ProcessesAreRunningAutomationPipelineTrigger_DisplayName;
+
+    public ProcessInfo[] Processes { get; } = processes ?? [];
+
+    public Task<bool> IsMatchingEvent(IAutomationEvent automationEvent)
     {
-        public string DisplayName => Resource.ProcessesAreRunningAutomationPipelineTrigger_DisplayName;
+        if (automationEvent is not ProcessAutomationEvent { Type: ProcessEventInfoType.Started } e)
+            return Task.FromResult(false);
 
-        public ProcessInfo[] Processes { get; }
+        if (Log.Instance.IsTraceEnabled)
+            Log.Instance.Trace($"Checking for {e.ProcessInfo.Name}... [processes={string.Join(",", Processes.Select(p => p.Name))}]");
 
-        [JsonConstructor]
-        public ProcessesAreRunningAutomationPipelineTrigger(ProcessInfo[] processes) => Processes = processes;
-
-        public Task<bool> IsSatisfiedAsync(IAutomationEvent automationEvent)
+        if (!Processes.Contains(e.ProcessInfo) && !Processes.Select(p => p.Name).Contains(e.ProcessInfo.Name))
         {
-            if (automationEvent is StartupAutomationEvent)
-                return Task.FromResult(false);
-
-            if (automationEvent is not ProcessAutomationEvent { ProcessEventInfo.Type: ProcessEventInfoType.Started } pae)
-                return Task.FromResult(false);
-
             if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Checking for {pae.ProcessEventInfo.Process.Name}... [processes={string.Join(",", Processes.Select(p => p.Name))}]");
+                Log.Instance.Trace($"Process name {e.ProcessInfo.Name} not in the list.");
 
-            if (!Processes.Contains(pae.ProcessEventInfo.Process) && !Processes.Select(p => p.Name).Contains(pae.ProcessEventInfo.Process.Name))
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Process name {pae.ProcessEventInfo.Process.Name} not in the list.");
-
-                return Task.FromResult(false);
-            }
-
-            var result = Processes.SelectMany(p => Process.GetProcessesByName(p.Name)).Any();
-
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Process name {pae.ProcessEventInfo.Process.Name} found in process list: {result}.");
-
-            return Task.FromResult(result);
+            return Task.FromResult(false);
         }
 
-        public IAutomationPipelineTrigger DeepCopy() => new ProcessesAreRunningAutomationPipelineTrigger(Processes);
+        var result = Processes.SelectMany(p => Process.GetProcessesByName(p.Name)).Any();
 
-        public IAutomationPipelineTrigger DeepCopy(ProcessInfo[] processes) => new ProcessesAreRunningAutomationPipelineTrigger(processes);
+        if (Log.Instance.IsTraceEnabled)
+            Log.Instance.Trace($"Process name {e.ProcessInfo.Name} found in process list: {result}.");
 
-        public override bool Equals(object? obj)
-        {
-            return obj is ProcessesAreRunningAutomationPipelineTrigger t && Processes.SequenceEqual(t.Processes);
-        }
-
-        public override int GetHashCode() => HashCode.Combine(Processes);
+        return Task.FromResult(result);
     }
+
+    public Task<bool> IsMatchingState()
+    {
+        var result = Processes.SelectMany(p => Process.GetProcessesByName(p.Name)).Any();
+        return Task.FromResult(result);
+    }
+
+    public void UpdateEnvironment(AutomationEnvironment environment)
+    {
+        environment.ProcessesStarted = true;
+        environment.Processes = Processes;
+    }
+
+    public IAutomationPipelineTrigger DeepCopy() => new ProcessesAreRunningAutomationPipelineTrigger(Processes);
+
+    public IProcessesAutomationPipelineTrigger DeepCopy(ProcessInfo[] processes) => new ProcessesAreRunningAutomationPipelineTrigger(processes);
+
+    public override bool Equals(object? obj)
+    {
+        return obj is ProcessesAreRunningAutomationPipelineTrigger t && Processes.SequenceEqual(t.Processes);
+    }
+
+    public override int GetHashCode()
+    {
+        var hc = new HashCode();
+        Processes.ForEach(p => hc.Add(p));
+        return hc.ToHashCode();
+    }
+
+    public override string ToString() => $"{nameof(Processes)}: {string.Join(", ", Processes)}";
 }

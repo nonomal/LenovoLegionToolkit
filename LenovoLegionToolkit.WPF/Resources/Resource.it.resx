@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -91,13 +150,6 @@
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>Aggiungi Evento</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Message" xml:space="preserve">
-    <value>Utilizza le configurazioni energetiche di windows anche quando Vantage è in esecuzione.
-Questa opzione è serve solo ai dispositivi che non possiedono modalità energetiche alternative.</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>Utilizza le configurazioni energetiche di Windows</value>
   </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>Alimenta i dispositivi connessi alle porte USB, quando il computer è spento, in standby o in ibernazione.</value>
@@ -319,21 +371,6 @@ l'orario indicato potrebbe non essere corretto se il laptop è stato caricato me
   <data name="BatteryPage_Title" xml:space="preserve">
     <value>Batteria</value>
   </data>
-  <data name="CPUBoostModeControl_OnBattery" xml:space="preserve">
-    <value>Utilizzando batteria</value>
-  </data>
-  <data name="CPUBoostModeControl_PluggedIn" xml:space="preserve">
-    <value>Alimentato</value>
-  </data>
-  <data name="CPUBoostModeControl_PowerPlans" xml:space="preserve">
-    <value>Opzioni energetiche</value>
-  </data>
-  <data name="CPUBoostModesWindow_LearnMore" xml:space="preserve">
-    <value>Ulteriori informazioni su microsoft.com</value>
-  </data>
-  <data name="CPUBoostModesWindow_Title" xml:space="preserve">
-    <value>Modalità Boost CPU</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
@@ -342,15 +379,6 @@ l'orario indicato potrebbe non essere corretto se il laptop è stato caricato me
   </data>
   <data name="Close" xml:space="preserve">
     <value>Chiudi</value>
-  </data>
-  <data name="ColorCardControl_Blue" xml:space="preserve">
-    <value>Blu</value>
-  </data>
-  <data name="ColorCardControl_Green" xml:space="preserve">
-    <value>Verde</value>
-  </data>
-  <data name="ColorCardControl_Red" xml:space="preserve">
-    <value>Rosso</value>
   </data>
   <data name="Color_Blue" xml:space="preserve">
     <value>Blu</value>
@@ -415,17 +443,17 @@ Attenzione: Questa azione non funzionerà correttamente se il display è spento 
   <data name="DeviceInformationWindow_BiosVersion_Title" xml:space="preserve">
     <value>Versione BIOS</value>
   </data>
-  <data name="DeviceInformationWindow_Copied_Message" xml:space="preserve">
+  <data name="CopiedToClipboard_Message" xml:space="preserve">
+    <value>Testo copiato negli appunti.</value>
+  </data>
+  <data name="CopiedToClipboard_Message_WithParam" xml:space="preserve">
     <value>"{0}" è stato copiato.</value>
   </data>
-  <data name="DeviceInformationWindow_Copied_Title" xml:space="preserve">
+  <data name="CopiedToClipboard_Title" xml:space="preserve">
     <value>Copiato!</value>
   </data>
   <data name="DeviceInformationWindow_Device_Title" xml:space="preserve">
     <value>Dispositivo</value>
-  </data>
-  <data name="DeviceInformationWindow_InWarranty" xml:space="preserve">
-    <value>In Garanzia</value>
   </data>
   <data name="DeviceInformationWindow_LenovoSupport" xml:space="preserve">
     <value>Supporto Lenovo</value>
@@ -439,9 +467,6 @@ Attenzione: Questa azione non funzionerà correttamente se il display è spento 
   <data name="DeviceInformationWindow_Model_Title" xml:space="preserve">
     <value>Modello</value>
   </data>
-  <data name="DeviceInformationWindow_OutOfWarranty" xml:space="preserve">
-    <value>Fuori Garanzia</value>
-  </data>
   <data name="DeviceInformationWindow_SerialNumber_Title" xml:space="preserve">
     <value>Numero seriale</value>
   </data>
@@ -454,27 +479,16 @@ Attenzione: Questa azione non funzionerà correttamente se il display è spento 
   <data name="DeviceInformationWindow_WarrantyStartDate_Title" xml:space="preserve">
     <value>Data di inizio</value>
   </data>
-  <data name="DeviceInformationWindow_WarrantyStatus_Title" xml:space="preserve">
-    <value>Stato</value>
-  </data>
   <data name="DeviceInformationWindow_Warranty_Title" xml:space="preserve">
     <value>Garanzia</value>
   </data>
-  <data name="DiscreteGPUControl_Active" xml:space="preserve">
+  <data name="Active" xml:space="preserve">
     <value>Attivata</value>
   </data>
   <data name="DiscreteGPUControl_Deactivate" xml:space="preserve">
     <value>Disattiva</value>
   </data>
-  <data name="DiscreteGPUControl_DisablePossible" xml:space="preserve">
-    <value>La GPU Nvidia può essere disattivata.
-
-Ricorda, alcuni programmi potrebbero crashare se la disattivi.</value>
-  </data>
-  <data name="DiscreteGPUControl_GPUIsNotActive" xml:space="preserve">
-    <value>La GPU Nvidia non è attiva.</value>
-  </data>
-  <data name="DiscreteGPUControl_Inactive" xml:space="preserve">
+  <data name="Inactive" xml:space="preserve">
     <value>Disattivata</value>
   </data>
   <data name="DiscreteGPUControl_KillApps" xml:space="preserve">
@@ -527,6 +541,9 @@ Clicca il logo PayPal qui sotto oppure scansiona il QR code per donare con PayPa
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
+  <data name="ExcludeRefreshRatesWindow_Description" xml:space="preserve">
+    <value>Deseleziona le frequenze di aggiornamento che non desideri utilizzare quando viene utilizzata la scorciatoia Fn+R.</value>
+  </data>
   <data name="ExcludeRefreshRatesWindow_NoRefreshRatesFound_Message" xml:space="preserve">
     <value>Assicurati che il display del laptop sia acceso. Lenovo Legion Toolkit non può caricare le frequenze di aggiornamento per un display non acceso.</value>
   </data>
@@ -538,6 +555,9 @@ Clicca il logo PayPal qui sotto oppure scansiona il QR code per donare con PayPa
   </data>
   <data name="Exit" xml:space="preserve">
     <value>Esci</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Esporta</value>
   </data>
   <data name="ExtendedHybridModeInfoWindow_Auto_Message" xml:space="preserve">
     <value>Usa solo la GPU integrata quando è a batteria e sia la GPU integrata che quella dedicata quando è collegato l'adattatore CA. Quando è collegato un adattatore non standard, il sistema passa alla modalità solo GPU ibrida-integrata.</value>
@@ -587,7 +607,7 @@ Clicca il logo PayPal qui sotto oppure scansiona il QR code per donare con PayPa
   <data name="FanCurveControl_GPU" xml:space="preserve">
     <value>GPU</value>
   </data>
-  <data name="FanCurveControl_RPM" xml:space="preserve">
+  <data name="RPM" xml:space="preserve">
     <value>Giri/min</value>
   </data>
   <data name="FlipToStartAutomationStepControl_Message" xml:space="preserve">
@@ -613,13 +633,6 @@ Clicca il logo PayPal qui sotto oppure scansiona il QR code per donare con PayPa
   </data>
   <data name="FnLockControl_Title" xml:space="preserve">
     <value>Fn Lock</value>
-  </data>
-  <data name="GodModeSettingsWindow_Advanced_MaxOffset_Message" xml:space="preserve">
-    <value>ATTENZIONE!
-Alcuni portatili potrebbero accettare dei limiti di potenza superiori di quelli indicati, quindi stai attento. Questa opzione può creare comportamenti imprevisti, se non sai cosa stai facendo lascia questo valore a 0.</value>
-  </data>
-  <data name="GodModeSettingsWindow_Advanced_MaxOffset_Title" xml:space="preserve">
-    <value>Offset del limite di potenza massimo</value>
   </data>
   <data name="GodModeSettingsWindow_Advanced_Message" xml:space="preserve">
     <value>Non modificare le opzioni seguenti a meno che tu non sappia davvero cosa stai facendo.</value>
@@ -695,11 +708,11 @@ ATTENZIONE: questa azione non verrà eseguita correttamente se il display intern
   <data name="HDRControl_Warning" xml:space="preserve">
     <value>L'utilizzo dell'HDR è bloccato dalle impostazioni di Windows.</value>
   </data>
+  <data name="Import" xml:space="preserve">
+    <value>Importa</value>
+  </data>
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Questo dispositivo non è compatibile con Lenovo Legion Toolkit.</value>
-  </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
   </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Nessuna tastiera compatibile trovata</value>
@@ -709,9 +722,6 @@ ATTENZIONE: questa azione non verrà eseguita correttamente se il display intern
   </data>
   <data name="Keyboard_VantageEnabledWarning_Message" xml:space="preserve">
     <value>La retroilluminazione della tastiera non può essere controllata qua mentre Vantage o i suoi servizi sono in esecuzione.</value>
-  </data>
-  <data name="Keyboard_VantageEnabledWarning_Title" xml:space="preserve">
-    <value>Lenovo Vantage sembra essere abilitato</value>
   </data>
   <data name="MainWindow_NavigationItem_About" xml:space="preserve">
     <value>Informazioni su</value>
@@ -732,7 +742,7 @@ ATTENZIONE: questa azione non verrà eseguita correttamente se il display intern
     <value>Tastiera</value>
   </data>
   <data name="MainWindow_NavigationItem_Packages" xml:space="preserve">
-    <value>Pacchetti</value>
+    <value>Downloads</value>
   </data>
   <data name="MainWindow_NavigationItem_Settings" xml:space="preserve">
     <value>Impostazioni</value>
@@ -792,11 +802,14 @@ ATTENZIONE: questa azione non verrà eseguita correttamente se il display intern
     <value>Num Lock on</value>
   </data>
   <data name="Notification_SpectrumKeyboardBacklight_Backlight" xml:space="preserve">
-		<value>Retroilluminazione {0}</value>
-	</data>
+    <value>Retroilluminazione {0}</value>
+  </data>
   <data name="Notification_SpectrumKeyboardBacklight_Brightness" xml:space="preserve">
-		<value>Luminosità {0}</value>
-	</data>
+    <value>Luminosità {0}</value>
+  </data>
+  <data name="Notification_SpectrumKeyboardBacklight_Profile" xml:space="preserve">
+    <value>Profilo {0}</value>
+  </data>
   <data name="Notification_TouchpadOff" xml:space="preserve">
     <value>Touchpad off</value>
   </data>
@@ -830,6 +843,9 @@ Abilita questa opzione in caso di conflitti con le applicazioni a schermo intero
   </data>
   <data name="NotificationsSettingsWindow_Microphone" xml:space="preserve">
     <value>Microfono</value>
+  </data>
+  <data name="NotificationsSettingsWindow_NotificationPosition_Title" xml:space="preserve">
+    <value>Posizione</value>
   </data>
   <data name="NotificationsSettingsWindow_PowerMode" xml:space="preserve">
     <value>Modalità di alimentazione</value>
@@ -885,6 +901,9 @@ Abilita questa opzione in caso di conflitti con le applicazioni a schermo intero
   <data name="PackageControl_HttpGeneralError_Title" xml:space="preserve">
     <value>Si è verificato un errore</value>
   </data>
+  <data name="PackageControl_IsUpdateInfo" xml:space="preserve">
+    <value>Aggiornamento disponibile!</value>
+  </data>
   <data name="PackageControl_OldPackageWarning" xml:space="preserve">
     <value>Questo pacchetto ha più di un anno.</value>
   </data>
@@ -894,9 +913,6 @@ Abilita questa opzione in caso di conflitti con le applicazioni a schermo intero
   <data name="PackagesPage_Disclaimer_Message" xml:space="preserve">
     <value>Qua sotto è riportato un elenco di pacchetti software contrassegnati come compatibili con il tuo laptop. 
 Assicurati sempre di installare i pacchetti corretti.</value>
-  </data>
-  <data name="PackagesPage_Disclaimer_Title" xml:space="preserve">
-    <value>Importante</value>
   </data>
   <data name="PackagesPage_DownloadFailed_Message" xml:space="preserve">
     <value>Verificare se il tipo di macchina e il sistema operativo sono impostati correttamente.</value>
@@ -910,10 +926,7 @@ Assicurati sempre di installare i pacchetti corretti.</value>
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Download in corso</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Scarica in</value>
-  </data>
-  <data name="PackagesPage_Filter" xml:space="preserve">
+  <data name="Filter" xml:space="preserve">
     <value>Filtra...</value>
   </data>
   <data name="PackagesPage_MachineType" xml:space="preserve">
@@ -925,14 +938,14 @@ Assicurati sempre di installare i pacchetti corretti.</value>
   <data name="PackagesPage_PrimarySource" xml:space="preserve">
     <value>Ufficiale (consigliato)</value>
   </data>
-  <data name="PackagesPage_PrimarySource_ToolTip" xml:space="preserve">
-    <value>Come il supporto PC Lenovo</value>
+  <data name="PackagesPage_PrimarySource_Message" xml:space="preserve">
+    <value>Come Lenovo Vantage</value>
   </data>
   <data name="PackagesPage_SecondarySource" xml:space="preserve">
     <value>Terze parti</value>
   </data>
-  <data name="PackagesPage_SecondarySource_ToolTip" xml:space="preserve">
-    <value>Come Lenovo DriverGrabber</value>
+  <data name="PackagesPage_SecondarySource_Message" xml:space="preserve">
+    <value>Come Lenovo PC Support</value>
   </data>
   <data name="PackagesPage_Sort_Category" xml:space="preserve">
     <value>Categoria</value>
@@ -952,17 +965,11 @@ Assicurati sempre di installare i pacchetti corretti.</value>
   <data name="Paste" xml:space="preserve">
     <value>Incolla</value>
   </data>
-  <data name="PickProcessesWindow_Title" xml:space="preserve">
-    <value>Applicazioni</value>
-  </data>
   <data name="PowerModeAutomationStepControl_Message" xml:space="preserve">
     <value>Cambia la modalità energetica.</value>
   </data>
   <data name="PowerModeAutomationStepControl_Title" xml:space="preserve">
-    <value>Modalità energetiche</value>
-  </data>
-  <data name="PowerModeControl_ChangeError" xml:space="preserve">
-    <value>Impossibile cambiare modalità energetica</value>
+    <value>Modalità energetica</value>
   </data>
   <data name="PowerModeControl_Message" xml:space="preserve">
     <value>Cambia la modalità energetica.
@@ -972,34 +979,10 @@ Puoi anche usare la scorciatoia Fn+Q.</value>
     <value>Opzioni</value>
   </data>
   <data name="PowerModeControl_Title" xml:space="preserve">
-    <value>Modalità energetiche</value>
+    <value>Modalità energetica</value>
   </data>
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>La modalità di alimentazione selezionata potrebbe non funzionare correttamente senza un alimentatore collegato.</value>
-  </data>
-  <data name="PowerModeWindow_Title" xml:space="preserve">
-    <value>Modalità energetiche</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Message" xml:space="preserve">
-    <value>L'abilitazione di questa opzione quando Lenovo Vantage è in esecuzione e cambia i piani di alimentazione sul laptop potrebbe causare un comportamento imprevisto.</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Sei sicuro/a?</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>Bilanciata</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>Personalizzata</value>
-  </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>Prestazioni</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>Silenziosa</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>Opzioni energetiche</value>
   </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Modifica retroilluminazione tastiera.</value>
@@ -1106,20 +1089,11 @@ Assicurati prima, che il tuo script funzioni correttamente.</value>
   <data name="SettingsPage_AccentColor_Title" xml:space="preserve">
     <value>Colore</value>
   </data>
-  <data name="SettingsPage_Advanced_Message" xml:space="preserve">
-    <value>Non modificare le opzioni seguenti a meno che tu non sappia davvero cosa stai facendo.</value>
-  </data>
-  <data name="SettingsPage_Advanced_Title" xml:space="preserve">
-    <value>Avanzate</value>
-  </data>
   <data name="SettingsPage_Autorun_Message" xml:space="preserve">
     <value>Inizia ridotto a icona quando accedi a Windows.</value>
   </data>
   <data name="SettingsPage_Autorun_Title" xml:space="preserve">
     <value>Esecuzione automatica</value>
-  </data>
-  <data name="SettingsPage_CPUBoostModes_Title" xml:space="preserve">
-    <value>Modalità Boost CPU</value>
   </data>
   <data name="SettingsPage_DisableLegionZone_Error_Message" xml:space="preserve">
     <value>Legion Zone potrebbe non essere disabilitato correttamente</value>
@@ -1173,12 +1147,6 @@ Il riavvio è consigliabile dopo aver cambiato questa impostazione.</value>
   <data name="SettingsPage_EnableLenovoHotkeys_Error_Title" xml:space="preserve">
     <value>Impossibile abilitare Lenovo Hotkeys</value>
   </data>
-  <data name="SettingsPage_EnableVantage_Error_Message" xml:space="preserve">
-    <value>Vantage potrebbe non essere abilitato correttamente</value>
-  </data>
-  <data name="SettingsPage_EnableVantage_Error_Title" xml:space="preserve">
-    <value>Impossibile abilitare Vantage</value>
-  </data>
   <data name="SettingsPage_ExcludeRefreshRates_Message" xml:space="preserve">
     <value>Puoi escludere le frequenze di aggiornamento per rendere più comoda la scorciatoia Fn+R.</value>
   </data>
@@ -1203,8 +1171,8 @@ Il riavvio è consigliabile dopo aver cambiato questa impostazione.</value>
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>Notifiche</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
-    <value>Opzioni energetiche</value>
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
+    <value>Piani energetici</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
     <value>Assegna azione rapida a Fn+F9 doppia pressione.</value>
@@ -1242,16 +1210,88 @@ Il riavvio è consigliabile dopo aver cambiato questa impostazione.</value>
   <data name="SpectrumKeyboardBacklightControl_ApplyProfileError_Title" xml:space="preserve">
     <value>Impossibile applicare il profilo</value>
   </data>
-  <data name="TimeWindow_Sunrise" xml:space="preserve">
+  <data name="SpectrumKeyboardBacklightControl_ApplyProfileError_Message" xml:space="preserve">
+    <value>Impossibile applicare il profilo di illuminazione.</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_Brightness_Title" xml:space="preserve">
+    <value>Luminosità</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_DeselectAll_ToolTip" xml:space="preserve">
+    <value>Deseleziona tutte le zone</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_Effects" xml:space="preserve">
+    <value>Effetti</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_ExportProfileError_Message" xml:space="preserve">
+    <value>Il profilo non può essere esportato</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_ExportProfileError_Title" xml:space="preserve">
+    <value>Impossibile esportate il profilo</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_ImportProfileError_Message" xml:space="preserve">
+    <value>Il profilo non può essere importato</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_ImportProfileError_Title" xml:space="preserve">
+    <value>Impossibile importare il profilo</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_NoEffects_Text" xml:space="preserve">
+    <value>Nessun effetto impostato.</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_ResetToDefault_Tooltip" xml:space="preserve">
+    <value>Reimposta a predefinito</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_SelectAll_ToolTip" xml:space="preserve">
+    <value>Deseleziona tutte le zone</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_SwitchKeyboardLayout_ToolTip" xml:space="preserve">
+    <value>Cambia layout della tastiera</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_ClockwiseDirection_Title" xml:space="preserve">
+    <value>Direzione</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Color_Title" xml:space="preserve">
+    <value>Colore</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Colors_Title" xml:space="preserve">
+    <value>Colori</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Direction_Title" xml:space="preserve">
+    <value>Direzione</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Effect_Title" xml:space="preserve">
+    <value>Effetto</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Effect_Warning" xml:space="preserve">
+    <value>Questo effetto verrà applicato all'intera tastiera e sostituirà tutti gli altri effetti.</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Speed_Title" xml:space="preserve">
+    <value>Velocità</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Title_Add" xml:space="preserve">
+    <value>Aggiungi effetto</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightEditEffectWindow_Title_Edit" xml:space="preserve">
+    <value>Modifica effetto</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightProfileAutomationStepControl_Message" xml:space="preserve">
+    <value>Modifica profilo retroilluminazione tastiera.</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightProfileAutomationStepControl_Title" xml:space="preserve">
+    <value>Profilo retroilluminazione tastiera</value>
+  </data>
+  <data name="SpectrumKeyboardEffectControl_Description_AllZones" xml:space="preserve">
+    <value>Tutti i tasti</value>
+  </data>
+  <data name="SpectrumKeyboardEffectControl_Description_Zones" xml:space="preserve">
+    <value>{0} zone</value>
+  </data>
+  <data name="TimeAutomationPipelineTriggerTabItemContent_Sunrise" xml:space="preserve">
     <value>Alba</value>
   </data>
-  <data name="TimeWindow_Sunset" xml:space="preserve">
-    <value>Alba</value>
+  <data name="TimeAutomationPipelineTriggerTabItemContent_Sunset" xml:space="preserve">
+    <value>Tramonto</value>
   </data>
-  <data name="TimeWindow_Time" xml:space="preserve">
-    <value>Orario</value>
-  </data>
-  <data name="TimeWindow_TimeWindow_Title" xml:space="preserve">
+  <data name="TimeAutomationPipelineTriggerTabItemContent_Time" xml:space="preserve">
     <value>Orario</value>
   </data>
   <data name="ToggleHybridModeControl_Message" xml:space="preserve">
@@ -1336,13 +1376,7 @@ Il logging verrà abilitato automaticamente, se scegli di continuare.</value>
     <value>Puoi cambiare la retroilluminazione con Fn+Spazio</value>
   </data>
   <data name="WhiteKeyboardBacklightControl_Title" xml:space="preserve">
-    <value>Luminosità</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Abilita o Disabilita il tasto Windows.</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Tasto Windows</value>
+    <value>Retroilluminazione tastiera</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Funziona solo sulla tastiera integrata.</value>
@@ -1352,5 +1386,169 @@ Il logging verrà abilitato automaticamente, se scegli di continuare.</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Si</value>
+  </data>
+  <data name="MicrophoneControl_Title" xml:space="preserve">
+    <value>Microfono</value>
+  </data>
+  <data name="MicrophoneControl_Message" xml:space="preserve">
+    <value>Se spento, Il microfono sarà mutato.</value>
+  </data>
+  <data name="MicrophoneAutomationStepControl_Title" xml:space="preserve">
+    <value>Microfono</value>
+  </data>
+  <data name="MicrophoneAutomationStepControl_Message" xml:space="preserve">
+    <value>Se spento, Il microfono sarà mutato.</value>
+  </data>
+  <data name="ResolutionControl_Title" xml:space="preserve">
+    <value>Risoluzione</value>
+  </data>
+  <data name="ResolutionControl_Message" xml:space="preserve">
+    <value>Cambia la risoluzione dello schermo integrato.</value>
+  </data>
+  <data name="ResolutionAutomationStepControl_Title" xml:space="preserve">
+    <value>Risoluzione</value>
+  </data>
+  <data name="ResolutionAutomationStepControl_Message" xml:space="preserve">
+    <value>Modifica la risoluzione del display integrato.
+
+ATTENZIONE: questa azione non verrà eseguita correttamente se il display interno è spento.</value>
+  </data>
+  <data name="DpiScaleControl_Title" xml:space="preserve">
+    <value>DPI</value>
+  </data>
+  <data name="DpiScaleControl_Message" xml:space="preserve">
+    <value>Cambia il fattore di scala dello schermo integrato.</value>
+  </data>
+  <data name="DpiScaleAutomationStepControl_Title" xml:space="preserve">
+    <value>DPI</value>
+  </data>
+  <data name="DpiScaleAutomationStepControl_Message" xml:space="preserve">
+    <value>Modifica il fattore di scala del display integrato.
+
+ATTENZIONE: questa azione non verrà eseguita correttamente se il display interno è spento.</value>
+  </data>
+  <data name="DashboardPage_Display_Title" xml:space="preserve">
+    <value>Schermo</value>
+  </data>
+  <data name="OneLevelWhiteKeyboardBacklightControl_Title" xml:space="preserve">
+    <value>Retroilluminazione tastiera</value>
+  </data>
+  <data name="OneLevelWhiteKeyboardBacklightControl_Message" xml:space="preserve">
+    <value>Puoi spegnere o accendere la retroilluminazione tastiera con Fn+Spazio.</value>
+  </data>
+  <data name="OneLevelWhiteKeyboardBacklightAutomationStepControl_Title" xml:space="preserve">
+    <value>Retroilluminazione tastiera</value>
+  </data>
+  <data name="OneLevelWhiteKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
+    <value>Accendi o spegni retroilluminazione tastiera.</value>
+  </data>
+  <data name="PackagesPage_NoMatchingDownloads" xml:space="preserve">
+    <value>Nessun elemento corrispondente trovato</value>
+  </data>
+  <data name="PackagesPage_OnlyShowUpdates" xml:space="preserve">
+    <value>Visualizza solo gli aggiornamenti</value>
+  </data>
+  <data name="EditDashboardWindow_Title" xml:space="preserve">
+    <value>Personalizza Dashboard</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Ripristina</value>
+  </data>
+  <data name="EditDashboardWindow_CreateGroup_Title" xml:space="preserve">
+    <value>Crea gruppo</value>
+  </data>
+  <data name="EditDashboardWindow_CreateGroup_Message" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="EditDashboardWindow_Disclaimer_Message" xml:space="preserve">
+    <value>Alcune opzioni potrebbero non apparire nella Dashboard in base allo stato e configurazione del tuo dispositivo.</value>
+  </data>
+  <data name="DashboardPage_Customize" xml:space="preserve">
+    <value>Personalizza</value>
+  </data>
+  <data name="TurnOffMonitorsControl_Title" xml:space="preserve">
+    <value>Spegni i display</value>
+  </data>
+  <data name="TurnOffMonitorsControl_Message" xml:space="preserve">
+    <value>Spegni tutti i display.
+Spostare il mouse o premere il tasto sulla tastiera per risvegliarli.</value>
+  </data>
+  <data name="TurnOffMonitorsControl_TurnOff" xml:space="preserve">
+    <value>Spegni</value>
+  </data>
+  <data name="TurnOffMonitorsAutomationStepControl_Title" xml:space="preserve">
+    <value>Spegni i display</value>
+  </data>
+  <data name="TurnOffMonitorsAutomationStepControl_Message" xml:space="preserve">
+    <value>Spegni tutti i display.</value>
+  </data>
+  <data name="EditDashboardGroupControl_EditGroup_Title" xml:space="preserve">
+    <value>Modifica il nome del gruppo</value>
+  </data>
+  <data name="EditDashboardGroupControl_EditGroup_Message" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Notification_PanelLogoLightingOn" xml:space="preserve">
+    <value>Logo Legion acceso</value>
+  </data>
+  <data name="Notification_PanelLogoLightingOff" xml:space="preserve">
+    <value>Logo Legion spento</value>
+  </data>
+  <data name="Notification_PortLightingOn" xml:space="preserve">
+    <value>Retroilluminazione porte accesa</value>
+  </data>
+  <data name="Notification_PortLightingOff" xml:space="preserve">
+    <value>Retroilluminazione porte spenta</value>
+  </data>
+  <data name="PackageControl_RebootRequired" xml:space="preserve">
+    <value>Riavvio richiesto</value>
+  </data>
+  <data name="PackageControl_ShutdownRequired" xml:space="preserve">
+    <value>Spegnimento richiesto</value>
+  </data>
+  <data name="PackageControl_RebootRecommended" xml:space="preserve">
+    <value>Riavvio consigliato</value>
+  </data>
+  <data name="SaveAndClose" xml:space="preserve">
+    <value>Salva &amp; chiudi</value>
+  </data>
+  <data name="GodModeSettingsWindow_EditPreset_Title" xml:space="preserve">
+    <value>Nome preset</value>
+  </data>
+  <data name="GodModeSettingsWindow_EditPreset_Message" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="AboutPage_Temp" xml:space="preserve">
+    <value>Temp</value>
+  </data>
+  <data name="SettingsPage_SynchronizeBrightnessToAllPowerPlans_Message" xml:space="preserve">
+    <value>Quando attivo, lo stesso livello di luminosità verrà applicato a tutti i profili energia.</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Predefinito</value>
+  </data>
+  <data name="AddAutomationStepWindow_Title" xml:space="preserve">
+    <value>Aggiungi azione</value>
+  </data>
+  <data name="StatusTrayPopup_PowerMode" xml:space="preserve">
+    <value>Modalità di alimentazione</value>
+  </data>
+  <data name="StatusTrayPopup_DiscreteGPU" xml:space="preserve">
+    <value>GPU dedicata</value>
+  </data>
+  <data name="StatusTrayPopup_Battery" xml:space="preserve">
+    <value>Batteria</value>
+  </data>
+  <data name="StatusTrayPopup_DischargeRate" xml:space="preserve">
+    <value>Tasso di scarica</value>
+  </data>
+  <data name="StatusTrayPopup_UpdateAvailable" xml:space="preserve">
+    <value>Aggiornamento disponibile!</value>
+  </data>
+  <data name="SettingsPage_Power_Title" xml:space="preserve">
+    <value>Alimentazione</value>
+  </data>
+  <data name="PoweredOff" xml:space="preserve">
+    <value>Spento</value>
   </data>
 </root>

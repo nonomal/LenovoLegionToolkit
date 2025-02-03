@@ -97,6 +97,15 @@ namespace LenovoLegionToolkit.Lib.Automation.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deactivate GPU.
+        /// </summary>
+        public static string DeactivateGpuQuickAction_Title {
+            get {
+                return ResourceManager.GetString("DeactivateGpuQuickAction_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} second.
         /// </summary>
         public static string Delay_Second {
@@ -115,11 +124,155 @@ namespace LenovoLegionToolkit.Lib.Automation.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When device is connected.
+        /// </summary>
+        public static string DeviceConnectedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("DeviceConnectedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When device is disconnected.
+        /// </summary>
+        public static string DeviceDisconnectedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("DeviceDisconnectedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When displays turn off.
+        /// </summary>
+        public static string DisplayOffAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("DisplayOffAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When displays turn on.
+        /// </summary>
+        public static string DisplayOnAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("DisplayOnAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When external display is connected.
+        /// </summary>
+        public static string ExternalDisplayConnectedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("ExternalDisplayConnectedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When external display is disconnected.
+        /// </summary>
+        public static string ExternalDisplayDisconnectedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("ExternalDisplayDisconnectedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When game is running.
+        /// </summary>
+        public static string GamesAreRunningAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("GamesAreRunningAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When game closes.
+        /// </summary>
+        public static string GamesStopAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("GamesStopAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When Custom Mode preset changes.
+        /// </summary>
+        public static string GodModePresetChangedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("GodModePresetChangedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When HDR turns off.
+        /// </summary>
+        public static string HDROffAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("HDROffAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When HDR turns on.
+        /// </summary>
+        public static string HDROnAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("HDROnAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lid closed.
+        /// </summary>
+        public static string LidClosedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("LidClosedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lid opened.
+        /// </summary>
+        public static string LidOpenedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("LidOpenedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When low wattage AC power adapter is connected.
         /// </summary>
         public static string LowWattageACAdapterConnectedAutomationPipelineTrigger_DisplayName {
             get {
                 return ResourceManager.GetString("LowWattageACAdapterConnectedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string MacroAutomationStepState_Off {
+            get {
+                return ResourceManager.GetString("MacroAutomationStepState_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string MacroAutomationStepState_On {
+            get {
+                return ResourceManager.GetString("MacroAutomationStepState_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On resume.
+        /// </summary>
+        public static string OnResumeAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("OnResumeAutomationPipelineTrigger_DisplayName", resourceCulture);
             }
         }
         
@@ -133,7 +286,34 @@ namespace LenovoLegionToolkit.Lib.Automation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When power mode is changed.
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string OverclockDiscreteGPUAutomationStepState_Off {
+            get {
+                return ResourceManager.GetString("OverclockDiscreteGPUAutomationStepState_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string OverclockDiscreteGPUAutomationStepState_On {
+            get {
+                return ResourceManager.GetString("OverclockDiscreteGPUAutomationStepState_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Periodic action.
+        /// </summary>
+        public static string PeriodicActionPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("PeriodicActionPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When Power Mode is changed.
         /// </summary>
         public static string PowerModeAutomationPipelineTrigger_DisplayName {
             get {
@@ -142,7 +322,7 @@ namespace LenovoLegionToolkit.Lib.Automation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When app is running.
+        ///   Looks up a localized string similar to When app starts.
         /// </summary>
         public static string ProcessesAreRunningAutomationPipelineTrigger_DisplayName {
             get {
@@ -165,6 +345,42 @@ namespace LenovoLegionToolkit.Lib.Automation.Resources {
         public static string TimeAutomationPipelineTrigger_DisplayName {
             get {
                 return ResourceManager.GetString("TimeAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When user becomes inactive.
+        /// </summary>
+        public static string UserInactivityAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("UserInactivityAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When user becomes active.
+        /// </summary>
+        public static string UserInactivityAutomationPipelineTrigger_DisplayName_Zero {
+            get {
+                return ResourceManager.GetString("UserInactivityAutomationPipelineTrigger_DisplayName_Zero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When WiFi is connected.
+        /// </summary>
+        public static string WiFiConnectedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("WiFiConnectedAutomationPipelineTrigger_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When WiFi is disconnected.
+        /// </summary>
+        public static string WiFiDisconnectedAutomationPipelineTrigger_DisplayName {
+            get {
+                return ResourceManager.GetString("WiFiDisconnectedAutomationPipelineTrigger_DisplayName", resourceCulture);
             }
         }
     }

@@ -3,29 +3,40 @@ using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Controllers;
 using LenovoLegionToolkit.Lib.Features;
 
-namespace LenovoLegionToolkit.WPF.Windows.Dashboard
+namespace LenovoLegionToolkit.WPF.Windows.Dashboard;
+
+public partial class BalanceModeSettingsWindow
 {
-    public partial class BalanceModeSettingsWindow
+    private readonly PowerModeFeature _powerModeFeature = IoCContainer.Resolve<PowerModeFeature>();
+    private readonly AIController _aiController = IoCContainer.Resolve<AIController>();
+
+    public BalanceModeSettingsWindow()
     {
-        private readonly PowerModeFeature _powerModeFeature = IoCContainer.Resolve<PowerModeFeature>();
-        private readonly AIModeController _aiModeController = IoCContainer.Resolve<AIModeController>();
+        InitializeComponent();
 
-        public BalanceModeSettingsWindow()
-        {
-            InitializeComponent();
-
-            _aiModeCheckBox.IsChecked = _aiModeController.IsEnabled;
-        }
-
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            _aiModeController.IsEnabled = _aiModeCheckBox.IsChecked ?? false;
-
-            await _powerModeFeature.SetStateAsync(PowerModeState.Balance);
-
-            Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e) => Close();
+        IsVisibleChanged += BalanceModeSettingsWindow_IsVisibleChanged;
     }
+
+    private void BalanceModeSettingsWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (!IsVisible)
+            return;
+
+        _aiModeCheckBox.IsChecked = _aiController.IsAIModeEnabled;
+    }
+
+    private async void SaveButton_Click(object sender, RoutedEventArgs e)
+    {
+        var isAiModeChecked = _aiModeCheckBox.IsChecked ?? false;
+
+        _aiController.IsAIModeEnabled = isAiModeChecked;
+
+        await _aiController.StopAsync();
+        await _powerModeFeature.SetStateAsync(PowerModeState.Balance);
+        await _aiController.StartIfNeededAsync();
+
+        Close();
+    }
+
+    private void CancelButton_Click(object sender, RoutedEventArgs e) => Close();
 }

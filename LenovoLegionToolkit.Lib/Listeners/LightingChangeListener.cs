@@ -1,26 +1,72 @@
 ﻿using System;
-using System.Management;
 using System.Threading.Tasks;
+using LenovoLegionToolkit.Lib.Features;
+using LenovoLegionToolkit.Lib.Features.PanelLogo;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
+using LenovoLegionToolkit.Lib.SoftwareDisabler;
+using LenovoLegionToolkit.Lib.System.Management;
 using LenovoLegionToolkit.Lib.Utils;
 
-namespace LenovoLegionToolkit.Lib.Listeners
+namespace LenovoLegionToolkit.Lib.Listeners;
+
+public class LightingChangeListener(
+    PanelLogoBacklightFeature panelLogoBacklightFeature,
+    PortsBacklightFeature portsBacklightFeature,
+    FnKeysDisabler fnKeysDisabler)
+    : AbstractWMIListener<LightingChangeListener.ChangedEventArgs, LightingChangeState, int>(WMI.LenovoLightingEvent
+        .Listen)
 {
-    public class LightingChangeListener : AbstractWMIListener<LightingChangeState>
+    public class ChangedEventArgs(LightingChangeState state) : EventArgs
     {
-        public LightingChangeListener() : base("ROOT\\WMI", "LENOVO_LIGHTING_EVENT") { }
+        public LightingChangeState State { get; } = state;
+    }
 
-        protected override LightingChangeState GetValue(PropertyDataCollection properties)
+    protected override LightingChangeState GetValue(int value)
+    {
+        if (Log.Instance.IsTraceEnabled)
+            Log.Instance.Trace($"Event received. [value={value}]");
+
+        var result = (LightingChangeState)value;
+        return result;
+    }
+
+    protected override ChangedEventArgs GetEventArgs(LightingChangeState value) => new(value);
+
+    protected override async Task OnChangedAsync(LightingChangeState value)
+    {
+        try
         {
-            var property = properties["Key_ID"];
-            var propertyValue = Convert.ToInt32(property.Value);
+            if (await fnKeysDisabler.GetStatusAsync().ConfigureAwait(false) == SoftwareStatus.Enabled)
+            {
+                if (Log.Instance.IsTraceEnabled)
+                    Log.Instance.Trace($"Ignoring, FnKeys are enabled.");
 
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Event received. [value={propertyValue}]");
+                return;
+            }
 
-            var result = (LightingChangeState)propertyValue;
-            return result;
+            switch (value)
+            {
+                case LightingChangeState.Panel when await panelLogoBacklightFeature.IsSupportedAsync().ConfigureAwait(false):
+                    {
+                        var type = await panelLogoBacklightFeature.GetStateAsync().ConfigureAwait(false) == PanelLogoBacklightState.On
+                            ? NotificationType.PanelLogoLightingOn
+                            : NotificationType.PanelLogoLightingOff;
+
+                        MessagingCenter.Publish(new NotificationMessage(type));
+                        break;
+                    }
+                case LightingChangeState.Ports when await portsBacklightFeature.IsSupportedAsync().ConfigureAwait(false):
+                    {
+                        var type = await portsBacklightFeature.GetStateAsync().ConfigureAwait(false) == PortsBacklightState.On
+                            ? NotificationType.PortLightingOn
+                            : NotificationType.PortLightingOff;
+
+                        MessagingCenter.Publish(new NotificationMessage(type));
+                        break;
+                    }
+            }
         }
-
-        protected override Task OnChangedAsync(LightingChangeState value) => Task.CompletedTask;
+        catch { /* Ignored. */ }
     }
 }
